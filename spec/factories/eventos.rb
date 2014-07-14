@@ -4,10 +4,10 @@ FactoryGirl.define do
   factory :evento do
     paciente_id 1
     doctor_id 1
-    motivo "MyString"
+    motivo "Dolor de muela"
     start_time "2014-07-10 13:58:01"
     end_time "2014-07-10 13:58:01"
-    registrado_por "MyString"
+    registrado_por "Administrador"
     confirmado false
   end
 end
