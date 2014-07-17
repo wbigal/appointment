@@ -1,0 +1,84 @@
+<div class="col-md-8">
+  <div class="portlet">
+    <div class="portlet-header">
+      <h3>
+        <i class="fa fa-calendar"></i>
+        Calendario
+      </h3>
+    </div> <!-- /.portlet-header -->
+    <div class="portlet-content">
+      <div id="calendar"></div> <!-- /#full-calendar -->             
+    </div> <!-- /.portlet-content -->
+  </div> <!-- /.portlet -->
+</div> <!-- /.col-md-8 -->
+<script>
+
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      defaultDate: '2014-06-12',
+      selectable: true,
+      selectHelper: true,
+      select: function(start, end) {
+        var title = prompt(start.stripTime()+end.format() );
+        var eventData;
+        if (title) {
+          eventData = {
+            title: title,
+            start: start,
+            end: end
+          };
+          $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+      },
+      editable: true,
+      events: [
+        {
+          title: 'All Day Event',
+          start: '2014-06-01'
+        },
+        {
+          title: 'Long Event',
+          start: '2014-06-07',
+          end: '2014-06-10'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2014-06-09T16:00:00'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2014-06-16T16:00:00'
+        },
+        {
+          title: 'Meeting',
+          start: '2014-06-12T10:30:00',
+          end: '2014-06-12T12:30:00'
+        },
+        {
+          title: 'Lunch',
+          start: '2014-06-12T12:00:00'
+        },
+        {
+          title: 'Birthday Party',
+          start: '2014-06-13T07:00:00'
+        },
+        {
+          title: 'Click for Google',
+          url: 'http://google.com/',
+          start: '2014-06-28'
+        }
+      ]
+    });
+    
+  });
+
+</script>

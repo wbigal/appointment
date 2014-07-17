@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery-1.10.1.min.js
-//= require jquery-ui-1.9.2.custom.min.js
+//= require moment.min.js
+//= require jquery.min.js
+//= require jquery-ui.custom.min.js
 //= require bootstrap.min.js
+//= require plugins/fullcalendar.min.js
