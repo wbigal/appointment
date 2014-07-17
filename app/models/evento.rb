@@ -12,7 +12,7 @@ class Evento < ActiveRecord::Base
 																		 	Time.parse(argv[:end_date]),
 																		 	argv[:doctor_id]
 		events = where('start_time >= ? AND end_time <= ?', start_date, end_date)
-		doctor_id ? events.where(doctor_id: doctor_id) : events														 	
+		!doctor_id.blank? ? events.where(doctor_id: doctor_id) : events														 	
 	end
 
 	
