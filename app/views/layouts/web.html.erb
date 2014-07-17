@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+  <title>ClinicasLibres</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700">
+  <%= stylesheet_link_tag    "application"%>
+  <%= stylesheet_link_tag    "custom"%>
+  <!-- App CSS -->
+  <%= stylesheet_link_tag    "target-template/target-admin.css"%>
+  <%= javascript_include_tag "application" %>
+  <%= render 'layouts/web/shim'%>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<%= render 'layouts/web/header/navbar'%>	
+<%= render 'layouts/web/header/mainbar'%>	
+<%= yield %>
+<%= render 'layouts/web/footer/footer'%>	
+</body>
+</html>
