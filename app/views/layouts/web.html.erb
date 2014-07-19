@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html class="no-js" ng-app="<%=@angular_app_name%>">
 <!--<![endif]-->
 <head>
   <title>ClinicasLibres</title>
@@ -13,10 +13,13 @@
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700">
   <%= stylesheet_link_tag    "application"%>
-  <%= stylesheet_link_tag    "custom"%>
   <!-- App CSS -->
   <%= stylesheet_link_tag    "target-template/target-admin.css"%>
+  <%= stylesheet_link_tag    "custom"%>
+
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application_angular" %>
+  <%= javascript_include_tag "angular-app/agenda.js" %>
   <%= render 'layouts/web/shim'%>
   <%= csrf_meta_tags %>
 </head>

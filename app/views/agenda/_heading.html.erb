@@ -1,19 +1,20 @@
-<div>
-  <h4 class="heading-inline">Weekly Sales Stats
-  &nbsp;&nbsp;<small>For the week of Jun 15 - Jun 22, 2011</small>
+<div ng-controller='FilterFormController as filterForm'>
+  <h4 class="heading-inline">Agenda
+  &nbsp;&nbsp;<small>Citas programadas para</small>
   &nbsp;&nbsp;</h4>
-
   <div class="btn-group ">
-    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-    <i class="fa fa-clock-o"></i>  &nbsp;
-      Change Week <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-          <li><a href="javascript:;">Action</a></li>
-          <li><a href="javascript:;">Another action</a></li>
-          <li><a href="javascript:;">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="javascript:;">Separated link</a></li>
-        </ul>
+    <form class="form-inline" role="form" ng-submit='filterForm.loadCalendar(selected_doctor)'>
+      <div class="form-group">
+        <select ng-model="selected_doctor" class="form-control" ng-options="doctor.full_name for doctor in filterForm.doctors" title="Doctors">
+          <option value="">Todos</option>
+        </select>        
+      </div>
+      <button ng-disabled="filterForm.isLoading" type="submit" class="btn btn-success">Filtrar</button>    
+    </form>
+  </div><br><br>
+  <div class="row">
+    <div class="col-md-12">
+      <center><h3 class="heading">{{filterForm.selected_doctor.full_name}}</h3></center>
+    </div>
   </div>
 </div><br>

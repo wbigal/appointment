@@ -3,4 +3,9 @@ class WebController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   layout 'web'
+  before_action :set_server_date
+  private
+  def set_server_date
+  	@server_date = Date.today.to_s
+  end
 end
