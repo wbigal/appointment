@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710185801) do
+ActiveRecord::Schema.define(version: 20140724160614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,5 +29,23 @@ ActiveRecord::Schema.define(version: 20140710185801) do
   end
 
   add_index "eventos", ["doctor_id"], name: "index_eventos_on_doctor_id", using: :btree
+
+  create_table "pacientes", force: true do |t|
+    t.string   "apellido_paterno"
+    t.string   "apellido_materno"
+    t.string   "nombres"
+    t.string   "full_name"
+    t.date     "fecha_nacimiento"
+    t.string   "sexo"
+    t.string   "domicilio"
+    t.string   "lugar_nacimiento"
+    t.string   "telefono_fijo"
+    t.string   "telefono_celular"
+    t.string   "estado_civil"
+    t.string   "ocupacion"
+    t.string   "recomendado_por"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
