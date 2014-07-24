@@ -2,5 +2,9 @@ json.array!(@eventos) do |evento|
 	json.id evento.id
 	json.start evento.start_time
 	json.end evento.end_time
-  json.title evento.motivo
+  json.title "Paciente: #{evento.id}"
+  json.doctor evento.doctor_id
+  json.paciente evento.paciente_id
+  json.motivo evento.motivo
+  json.color ['#e5412d','#f0ad4e','#428bca','#5cb85c','#5bc0de','#3c763d'][evento.doctor_id-1]
 end

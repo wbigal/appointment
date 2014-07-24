@@ -10,4 +10,16 @@
  *
  *= require target-template/target-admin.css
  */
+/*PAra lso iconos en agenda > evento*/
+.list-group .list-group-item i {
+color: #39b3d7;
+}
 
+.show-hide-animation {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.show-hide-animation.ng-hide {
+  opacity:0;
+}

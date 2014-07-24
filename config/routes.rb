@@ -3,7 +3,7 @@ ClinicasLibres::Application.routes.draw do
   root "principal#index"
 
   namespace :api, defaults: {format: 'json'} do
-    resources :eventos, except: [:update,:new,:edit]
+    resources :eventos, except: [:update,:new,:edit,:show]
     resources :doctors, except: [:update,:new,:edit]
   end
 end

@@ -15,4 +15,6 @@
 //= require jquery-ui.custom.min.js
 //= require bootstrap.min.js
 //= require plugins/fullcalendar.min.js
+//= require plugins/fullcalendar-es.js
 //= require plugins/jquery.loadmask.min.js
+//= require plugins/howl.js

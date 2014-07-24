@@ -4,8 +4,58 @@
       <%= render 'heading'%>
       <div class="row">        
         <%= render 'calendar'%> 
-        <%= render 'form'%>
-      </div> <!-- /.row --> 
+        <%= render 'event'%>
+      </div>
     </div> <!-- /.content-container -->    
   </div> <!-- /.content -->
 </div> <!-- /.container -->
+<div id="styledModal" class="modal modal-styled fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 class="modal-title">Registro de nuevo evento</h3>
+      </div>
+      <div class="modal-body">
+        <div class="portlet">
+          <div class="portlet-header">
+            <h3>
+              <i class="fa fa-user-md"></i>
+              Dr. Rodrigo el pepina palacios
+            </h3>
+          </div> <!-- /.portlet-header -->
+          <div class="portlet-content">
+            <form id="validate-enhanced" action="./form-validation.html" class="form parsley-form">              
+              <div class="form-group">
+                <label for="date-2">Paciente</label>
+                <div class="input-group date ui-datepicker">
+                    <input id="date-2" name="date-2" class="form-control parsley-validated" type="text" data-required="true">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="textarea-input">Motivo</label>
+                <textarea name="textarea-input" id="textarea-input" cols="10" rows="3" class="form-control"></textarea>
+              </div>               
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">Validate</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-tertiary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="portlet">
+  <div class="portlet-header">
+    <h3>
+      <i class="fa fa-tasks"></i>
+      Enhanced Fields
+    </h3>
+  </div> <!-- /.portlet-header -->

@@ -1,0 +1,37 @@
+<div class="col-md-4" ng-controller='EventController as eventCtrl' >
+  <div class="portlet">
+    <div class="portlet-header">
+      <h3>
+        <i class="fa fa-calendar"></i>
+        Evento seleccionado
+      </h3>
+    </div> <!-- /.portlet-header -->
+    <div class="portlet-content">
+      <div class="list-group show-hide-animation" ng-show='on_selected_event'>
+        <span class="list-group-item">
+          <h3 class="pull-left"><i class="fa fa-user-md"></i></h3>
+          <h4 class="list-group-item-heading"> &nbsp&nbsp DOCTOR</h4>
+          <p class="list-group-item-text"> &nbsp&nbsp {{evento.doctor}}</p>
+        </span>
+        <span class="list-group-item">
+          <h3 class="pull-left"><i class="fa fa-user"></i></h3>
+          <h4 class="list-group-item-heading"> &nbsp&nbsp PACIENTE</h4>
+          <p class="list-group-item-text"> &nbsp&nbsp {{evento.paciente}}</p>
+        </span>
+        <span class="list-group-item">
+          <h3 class="pull-left"><i class="fa fa-clock-o"></i></h3>
+          <h4 class="list-group-item-heading"> &nbsp&nbsp Fecha programada</h4>
+          <p class="list-group-item-text"> &nbsp&nbsp {{evento.fecha}}</p>
+        </span>
+        <span class="list-group-item">
+          <h3 class="pull-left"><i class="fa fa-stethoscope"></i></h3>
+          <h4 class="list-group-item-heading"> &nbsp&nbsp Motivo</h4>
+          <p class="list-group-item-text"> &nbsp&nbsp {{evento.motivo}}</p>
+        </span><br>              
+        <center>
+          <button type="button" ng-click='eventCtrl.deleteEvent(evento.id)'class="btn btn-danger"><i class="fa fa-times"></i>
+          Eliminar evento</button>
+        </center>           
+    </div> <!-- /.portlet-content -->
+  </div> <!-- /.portlet -->
+</div> <!-- /.col-md-8 -->
