@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20140724160614) do
     t.string   "estado_civil"
     t.string   "ocupacion"
     t.string   "recomendado_por"
+    t.string   "dni"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

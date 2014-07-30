@@ -10,11 +10,12 @@
  *
  *= require target-template/target-admin.css
  */
-/*PAra lso iconos en agenda > evento*/
+
+/*Para los iconos en agenda > evento*/
 .list-group .list-group-item i {
 color: #39b3d7;
 }
-
+/*Para laanimacion de show hide en agenda evento*/
 .show-hide-animation {
   -webkit-transition:all linear 0.5s;
   transition:all linear 0.5s;
@@ -23,3 +24,8 @@ color: #39b3d7;
 .show-hide-animation.ng-hide {
   opacity:0;
 }
+/*Para autocomplete*/
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }

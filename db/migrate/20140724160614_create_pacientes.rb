@@ -14,6 +14,7 @@ class CreatePacientes < ActiveRecord::Migration
       t.string :estado_civil
       t.string :ocupacion
       t.string :recomendado_por
+      t.string :dni
 
       t.timestamps
     end

@@ -18,3 +18,4 @@
 //= require plugins/fullcalendar-es.js
 //= require plugins/jquery.loadmask.min.js
 //= require plugins/howl.js
+//= require plugins/jquery.autocomplete.js

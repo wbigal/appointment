@@ -1,12 +1,13 @@
 class Evento < ActiveRecord::Base
-	validates_presence_of :paciente_id, :doctor_id
+	belongs_to :paciente
 	validates :motivo, length: { maximum: 250 }
 	validates :registrado_por, length: { maximum: 250 }
 	validate :validate_timings
 	validate :validate_on_same_day
 	validate :validate_occupied_event
+	validate :validate_paciente_exists
 
-	#used for the principal calendar
+  #used for the principal calendar
 	def self.all_in_range(**argv)
 		start_date, end_date, doctor_id = Time.parse(argv[:start_date]),
 																		 	Time.parse(argv[:end_date]),
@@ -17,6 +18,10 @@ class Evento < ActiveRecord::Base
 
 	
 	private
+	def validate_paciente_exists
+    errors[:paciente] << 'Ingresa un paciente registrado.' unless Paciente.find_by_id(self.paciente_id)
+  end
+
 	def validate_occupied_event
 		query = 'doctor_id = :id AND (
 								(start_time >= :starttime AND end_time <= :endtime) OR
