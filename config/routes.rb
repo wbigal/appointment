@@ -1,4 +1,5 @@
 ClinicasLibres::Application.routes.draw do
+  devise_for :users
   match 'agenda', to: 'agenda#index', as: 'agenda', via: 'get'
   root "principal#index"
 

@@ -13,6 +13,7 @@
 //= require moment.min.js
 //= require jquery.min.js
 //= require jquery-ui.custom.min.js
+//= require jquery_ujs 
 //= require bootstrap.min.js
 //= require plugins/fullcalendar.min.js
 //= require plugins/fullcalendar-es.js
