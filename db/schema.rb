@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20140730173510) do
     t.string   "full_name"
     t.string   "admin"
     t.string   "doctor"
+    t.string   "color"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

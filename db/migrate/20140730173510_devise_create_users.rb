@@ -40,6 +40,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       t.string :admin
       t.string :doctor
+      
+
+      t.string :color
 
       t.timestamps
     end

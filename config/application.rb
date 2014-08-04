@@ -44,5 +44,6 @@ module ClinicasLibres
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     I18n.enforce_available_locales = true
     config.assets.paths << Rails.root.join("vendor", "assets", "fonts")
+    config.autoload_paths << Rails.root.join('lib')
   end
 end

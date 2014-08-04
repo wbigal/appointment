@@ -1,14 +1,29 @@
 require 'spec_helper'
 
 describe Evento do
-  it 'validates the existence of paciente and docotr in the database: book page 231'
+  it 'is a valid evento' do
+    expect(build(:evento)).to be_valid
+  end
   
   it 'is invalid without paciente_id' do
   	expect(build(:evento, paciente_id: nil)).to_not be_valid
   end
+  it 'adds error on unexistence suplied pacient' do
+    paciente = create(:paciente)
+    expect(build(:evento, paciente_id: paciente.id + 1)).to have(1).error_on(:paciente)
+  end
   it 'is invalid without doctor_id' do
   	expect(build(:evento, doctor_id: nil)).to_not be_valid
   end
+  it 'adds error when you supply an admin user as doctor_id' do
+    admin = create(:admin_user)
+    expect(build(:evento, doctor_id: admin.id)).to_not be_valid
+  end
+  it 'adds error on unexistence supplied doctor' do
+    doctor = create(:doctor_user)
+    expect(build(:evento, doctor_id: doctor.id + 1)).to have(1).error_on(:doctor)
+  end
+
   it 'is a invalid motivo with > 250 caracters' do
   	expect(build(:evento, motivo: "a"*251)).to have(1).errors_on(:motivo)
   end
@@ -41,12 +56,14 @@ describe Evento do
  
   context	'creation on the same datetime' do
     before(:each) do
-      @event = create(:evento, doctor_id: 1, start_time: '2014-07-10 14:00:00',
-                               end_time: '2014-07-10 15:00:00')
+      @doctor_user = create(:doctor_user)
+      @doctor_user_2 = create(:doctor_user, email: 'chences1@hotmail.com', dni:'10101010')
+      @event = create(:evento, doctor_id: @doctor_user.id, start_time: '2014-07-10 14:00:00',
+                               end_time: '2014-07-10 15:00:00')      
     end
     context 'for a diferent doctor' do
       it 'allows to create on the same datetime' do
-        expect(build(:evento, doctor_id: 2, start_time: '2014-07-10 14:00:00',
+        expect(build(:evento, doctor_id: @doctor_user_2.id, start_time: '2014-07-10 14:00:00',
                     end_time: '2014-07-10 15:00:00')).to be_valid
       end
     end
@@ -87,14 +104,22 @@ describe Evento do
   end
   describe '#all_in_range' do
     before(:each) do
-      @d1_event1 = create(:evento, doctor_id: 1, start_time: '2014-07-10 13:00:00',
+      @doctor_user = create(:doctor_user)
+      @doctor_user_2 = create(:doctor_user, email: 'chences1@hotmail.com', dni:'10101010')
+      @d1_event1 = create(:evento, doctor_id: @doctor_user.id, start_time: '2014-07-10 13:00:00',
                           end_time: '2014-07-10 13:59:00')
-      @d1_event2 = create(:evento, doctor_id: 1, start_time: '2014-07-13 13:00:00',
+      @d1_event2 = create(:evento, doctor_id: @doctor_user.id, start_time: '2014-07-13 13:00:00',
                           end_time: '2014-07-13 13:59:00')
-      @d1_event3 = create(:evento, doctor_id: 1, start_time: '2014-12-20 13:00:00',
+      @d1_event3 = create(:evento, doctor_id: @doctor_user.id, start_time: '2014-12-20 13:00:00',
                           end_time: '2014-12-20 13:59:00')
-      @d2_event1 = create(:evento, doctor_id: 2, start_time: '2014-07-15 13:00:00',
+      @d2_event1 = create(:evento, doctor_id: @doctor_user_2.id, start_time: '2014-07-15 13:00:00',
                           end_time: '2014-07-15 13:59:00')
+    end
+    context 'without start or end params' do
+      it 'raises Exceptions::ParamsError' do
+         expect { Evento.all_in_range }.to raise_error(Exceptions::ParamsError,
+                                           "Se requiere la fecha de inicio y fecha final.")
+      end
     end
     context('with a provided doctor_id') do
       it 'returns not all records for doctor1' do

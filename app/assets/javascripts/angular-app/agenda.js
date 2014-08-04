@@ -30,6 +30,8 @@
         this.doctor_name = doctor_name;
         this.start = start_time;
         this.end = end_time;
+        this.formated_start = moment(start_time).format('LLL');
+        this.formated_end = moment(end_time).format('LLL');
         this.paciente_id = null;
         this.paciente_name = null;
         this.motivo = null;
@@ -52,6 +54,7 @@
 			  //para resetear los valores cuando se oculte el modal
 			  $scope.new_evento = {}
     		$scope.errors = {}
+    		$('#buscar_paciente').val('');
 			});
     	$('#buscar_paciente').autocomplete({
 	      serviceUrl: '/api/buscar/pacientes',
@@ -96,7 +99,6 @@
     												moment(created_event.start).format('LLL'),
     												false);   			
     			//falta clear el input para autocomplete
-    			$('#buscar_paciente').val('');
     			$scope.is_loading = false;
 	    	}).
 	    	error(function(data, status, headers){
@@ -104,7 +106,7 @@
 	    			messagesService.show_message(data.status, data.message);
 	    		}
 	    		else if(status == '422'){
-	    			$scope.errors = data.data.errors
+	    			$scope.errors = data.data.errors;
 	    		}
 	    		$scope.is_loading = false;
 		  });
@@ -156,7 +158,8 @@
     	currentEventService.resetEvento();    	
 			filterForm.isLoading = true;
     	if (selected_doctor == undefined || selected_doctor	 == null) {
-			  filterForm.selected_doctor = {id:null, full_name: 'Agenda de todos los doctores'};
+			  filterForm.selected_doctor = {id:null, full_name: 'Agenda de todos los doctores',
+			  															color:'black'};
 			}else{
 				filterForm.selected_doctor = selected_doctor;
 			}
@@ -176,6 +179,7 @@
 				defaultView: 'agendaWeek',
 				selectable: true,
 				selectHelper: true,
+				eventColor: filterForm.selected_doctor.color,
 				select: function(start, end) {
 					var view = $('#calendar').fullCalendar('getView');
 					if(view.name == 'month'){
