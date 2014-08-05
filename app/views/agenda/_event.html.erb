@@ -27,11 +27,13 @@
           <h3 class="pull-left"><i class="fa fa-stethoscope"></i></h3>
           <h4 class="list-group-item-heading"> &nbsp&nbsp Motivo</h4>
           <p class="list-group-item-text"> &nbsp&nbsp {{evento.motivo}}</p>
-        </span><br>              
+        </span><br>
+        <%if can? :destroy, :api_eventos%>              
         <center>
           <button type="button" ng-click='eventCtrl.deleteEvent(evento.id)'class="btn btn-danger"><i class="fa fa-times"></i>
           Eliminar evento</button>
-        </center>           
+        </center>
+        <%end%>           
     </div> <!-- /.portlet-content -->
   </div> <!-- /.portlet -->
 </div> <!-- /.col-md-8 -->

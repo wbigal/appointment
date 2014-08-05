@@ -1,3 +1,4 @@
+<%if can? :create, :api_eventos%>
 <div id="newEventModal" class="modal modal-styled fade" ng-controller='newEventController as newEventCtrl'>
   <div class="modal-dialog">
     <div class="modal-content">
@@ -56,3 +57,4 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<%end%>

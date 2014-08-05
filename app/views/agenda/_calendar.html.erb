@@ -7,7 +7,7 @@
       </h3>
     </div> <!-- /.portlet-header -->
     <div class="portlet-content" id='calendar-container'>
-      <div id="calendar" data-serverdate="<%= @server_date%>">
+      <div id="calendar" data-serverdate="<%= @server_date%>" data-selectable="<%= can? :create, :api_eventos%>">
       </div> <!-- /#full-calendar -->        
     </div> <!-- /.portlet-content -->
   </div> <!-- /.portlet -->

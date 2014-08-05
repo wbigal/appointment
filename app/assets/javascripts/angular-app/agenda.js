@@ -1,6 +1,11 @@
 (function(){
 	var app = angular.module('agenda',['angular-loading-bar', 'ngAnimate']);
-
+	//sends the authenticity token on all request
+	app.config([
+	  "$httpProvider", function($httpProvider) {
+	    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+	  }
+	]);
 	app.factory('currentEventService', function($rootScope){
 		var evento = {};
 		evento.updateEvento = function(id, doctor, paciente, motivo, fecha,jquery_generated){
@@ -108,6 +113,9 @@
 	    		else if(status == '422'){
 	    			$scope.errors = data.data.errors;
 	    		}
+	    		else if(status == '401'){
+	    			messagesService.show_message(data.status, data.message);
+	    		}
 	    		$scope.is_loading = false;
 		  });
     }					
@@ -177,7 +185,7 @@
 				firstDay: 1,
 				lazyFetching: false,
 				defaultView: 'agendaWeek',
-				selectable: true,
+				selectable: $('#calendar').data('selectable'),
 				selectHelper: true,
 				eventColor: filterForm.selected_doctor.color,
 				select: function(start, end) {
@@ -216,7 +224,7 @@
 		            };
 		        },
 		        error: function() {
-		            alert('there was an error while fetching events!');
+		            messagesService.show_message('error', 'Something went wrong.');
 		        },
 		    },
 		    eventClick: function(evento, jsEvent, view) {

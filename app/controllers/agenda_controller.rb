@@ -1,5 +1,6 @@
-class AgendaController < WebController
-	before_action :set_angular_appname
+class AgendaController < ApplicationController
+	before_action :set_angular_appname	
+  authorize_resource :class => false  
   def index
   	@hola = 'chau'
   end

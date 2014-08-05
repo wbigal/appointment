@@ -38,8 +38,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :dni      
       t.string :full_name
 
-      t.string :admin
-      t.string :doctor
+      t.boolean :admin
+      t.boolean :doctor
       
 
       t.string :color
