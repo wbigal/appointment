@@ -40,6 +40,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       t.boolean :admin
       t.boolean :doctor
+      t.boolean :superadmin
+      t.boolean :deshabilitado
       
 
       t.string :color

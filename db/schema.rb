@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 20140730173510) do
     t.string   "full_name"
     t.boolean  "admin"
     t.boolean  "doctor"
+    t.boolean  "superadmin"
+    t.boolean  "deshabilitado"
     t.string   "color"
     t.datetime "created_at"
     t.datetime "updated_at"

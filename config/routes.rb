@@ -1,5 +1,6 @@
 ClinicasLibres::Application.routes.draw do
-  devise_for :users
+  devise_for :users,:controllers => {:sessions => "users/sessions"},
+             :skip => :registrations
   match 'agenda', to: 'agenda#index', as: 'agenda', via: 'get'
   root "principal#index"
 

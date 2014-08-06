@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   sequence(:email) { |n| "test#{n}@test.com" }
-  sequence(:dni) { |n| "1010101#{n}" }
+  sequence(:dni) { |n| 10000000 + n }
   factory :user do
   	email
   	password '1234abcd'
@@ -13,11 +13,19 @@ FactoryGirl.define do
   	nombres 'Wenceslao'
   	color '#5cb85c'
     abreviacion 'Ing.'
+    sexo 'MASCULINO'
+    admin false
+    doctor false
+    superadmin false
   	factory :admin_user do
     	admin true
     end
     factory :doctor_user do
     	doctor true
     end
+    factory :superadmin_user do
+      superadmin true
+    end    
+
   end
 end

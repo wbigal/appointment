@@ -11,13 +11,13 @@ describe Api::DoctorsController, :type => :controller do
           sign_in  @admin_user
       		@doctor_1 = create(:doctor_user, apellido_paterno: 'Paez',
       												apellido_materno:'Chavez', nombres:'Wenceslao', abreviacion: 'Dr.',
-      												color: '#ecr123')
+      												color: '#fff123')
       		@doctor_2 = create(:doctor_user, apellido_paterno: 'Fabian',
       												apellido_materno:'Iparraguire', nombres:'Marlon', abreviacion: 'Dr.',
-      												color: '#ecr124')
+      												color: '#fff124')
       		@doctor_3 = create(:doctor_user, apellido_paterno: 'Valero',
       												apellido_materno:'Mallma', nombres:'Rafiqui', abreviacion: 'Dr.',
-      												color: '#ecr125')
+      												color: '#fff125')
       		@admin = create(:admin_user)
       		get :index, format: :json 
       	end
