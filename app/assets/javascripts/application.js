@@ -20,3 +20,8 @@
 //= require plugins/jquery.loadmask.min.js
 //= require plugins/howl.js
 //= require plugins/jquery.autocomplete.js
+//= require plugins/jquery.simplecolorpicker.js
+
+$(function() {
+	$('select[id="colorpicker"]').simplecolorpicker({theme: 'fontawesome'});
+});

@@ -28,6 +28,17 @@
     return evento;
 	});
 
+	app.factory('currentDoctorService', function($rootScope){
+		var doctor = {};
+		doctor.updateDoctor = function(id, full_name, color){
+        this.id = id;
+        this.full_name = full_name;
+        this.color = color;
+        $rootScope.$broadcast("doctorUpdated");
+    }
+    return doctor;
+	});
+	
 	app.factory('newEventService', function($rootScope){
 		var new_evento = {};
 		new_evento.newEvento = function(start_time,end_time,doctor_id,doctor_name){
@@ -41,7 +52,7 @@
         this.paciente_name = null;
         this.motivo = null;
         this.id = null;
-				$rootScope.$broadcast("newEventCreated");
+				$rootScope.$broadcast("newEventGenerated");
     }
     return new_evento;
 	});
@@ -49,43 +60,23 @@
 	app.controller('newEventController',
 								['$http','$scope','currentEventService','messagesService', 'newEventService',
 								function($http, $scope, currentEventService,
-												 messagesService, newEventService){						
-		$scope.$on('newEventCreated', function() {
+												 messagesService, newEventService){
+		$scope.show_modal = false;										 						
+		$scope.$on('newEventGenerated', function() {
 			$scope.new_evento = newEventService;
 			currentEventService.resetEvento();
+			$scope.show_modal = true;
   		$scope.$apply();//this is used bcs is triggered by a jquery code, specific de calendar select
-    	$('#newEventModal').modal('show');
-    	$('#newEventModal').on('hidden.bs.modal', function (e) {
-			  //para resetear los valores cuando se oculte el modal
-			  $scope.new_evento = {}
-    		$scope.errors = {}
-    		$('#buscar_paciente').val('');
-			});
-    	$('#buscar_paciente').autocomplete({
-	      serviceUrl: '/api/buscar/pacientes',
-	      minChars: 3,
-	      dataType: 'json',
-	      onInvalidateSelection: function () {
-	      	$scope.new_evento.paciente_name = null;
-	        $scope.new_evento.paciente_id = null;
-	        $('#buscar_paciente').val('');
-	      },
-	      onSelect: function (suggestion) {
-	        $scope.new_evento.paciente_name = suggestion.value;
-	        $scope.new_evento.paciente_id = suggestion.data;
-	      },
-	      transformResult: function(response) {
-	        return {
-	            suggestions: $.map(response, function(paciente) {
-	                return { value: paciente.full_name,
-	                       data: paciente.id,dni: paciente.dni };
-	            })
-	        };
-	      },
-	      showNoSuggestionNotice: true,
-	      noSuggestionNotice: 'Sin resultados...'
-		  });
     });
+
+    $scope.reset_data = function(){
+    	//on modal hide
+    	$scope.show_modal = false;
+			$scope.new_evento = {};
+			$scope.errors = {};
+			$scope.$apply();
+    }
+
     $scope.createEvent = function(){
     	$scope.is_loading = true;
     	var data = { evento: $scope.new_evento }
@@ -97,7 +88,7 @@
     			//muestra mensage
     			messagesService.show_message(data.status, data.message);
     			//renderiza nuevo envento en calendario
-    			$('#calendar').fullCalendar('renderEvent', created_event, false); // stick? = true
+    			$("[agenda-calendar]").fullCalendar('renderEvent', created_event, false); // stick? = true
     			//muestrael nuevo evento creado en current_Event
     			currentEventService.updateEvento(created_event.id, created_event.doctor,
     												created_event.paciente, created_event.motivo,
@@ -110,12 +101,12 @@
 	    		if(status == '400'){
 	    			messagesService.show_message(data.status, data.message);
 	    		}
-	    		else if(status == '422'){
-	    			$scope.errors = data.data.errors;
-	    		}
 	    		else if(status == '401'){
 	    			messagesService.show_message(data.status, data.message);
 	    		}
+	    		else if(status == '422'){
+	    			$scope.errors = data.data.errors;
+	    		}	    		
 	    		$scope.is_loading = false;
 		  });
     }					
@@ -124,7 +115,6 @@
 	app.controller('EventController',
 								['$http','$scope','currentEventService','messagesService',
 								function($http, $scope, currentEventService, messagesService){
-		var eventCtrl = this;
 		$scope.evento = currentEventService;
 		$scope.on_selected_event = false;
 		$scope.$on('valuesUpdated', function() {
@@ -138,10 +128,10 @@
 			$scope.evento = currentEventService;
 			$scope.on_selected_event = false;
     });
-    eventCtrl.deleteEvent = function(evento_id){
+    $scope.deleteEvent = function(evento_id){
     	$http.delete('/api/eventos/' +evento_id+ '.json').
-    		success(function(data, status, headers){    			
-    			$('#calendar').fullCalendar('removeEvents', evento_id);
+    		success(function(data, status, headers){   			
+    			$("[agenda-calendar]").fullCalendar('removeEvents', evento_id);
     			currentEventService.resetEvento();
 		  		$scope.on_selected_event = false;
 		  		messagesService.show_message(data.status, data.message);		  		
@@ -152,90 +142,191 @@
     };
 	}]);
 
+	app.controller('CalendarController',['currentDoctorService','$scope', 'messagesService',
+								'currentEventService','newEventService', function(currentDoctorService,$scope,
+								messagesService,currentEventService,newEventService){
+		$scope.doctor = {};
+		$scope.$on('doctorUpdated', function() {
+			$scope.doctor = currentDoctorService;
+		});
+		//al this functions are called by the agenda-calendar directive
+		$scope.showMessage = function(type, message){
+			messagesService.show_message(type, message)
+		};
+		$scope.showEvent = function(evento, by_jquery){
+			currentEventService.updateEvento(evento.id, evento.doctor, evento.paciente,
+			evento.motivo, moment(evento.start).format('LLL'), by_jquery)
+		};
+		$scope.newEvent = function(start,end,doctor_id,doctor_name){
+			newEventService.newEvento(start,end,doctor_id, doctor_name);	
+		}
+	}]);
+
 	app.controller('FilterFormController',
-								['$http','currentEventService','messagesService','newEventService',
-								function($http, currentEventService, messagesService, newEventService){
+								['$http','currentEventService','currentDoctorService',function($http,
+								currentEventService,currentDoctorService){
 		var filterForm = this;
 		filterForm.doctors = [];
 		filterForm.selected_doctor = {};
-		filterForm.isLoading = false;
 		$http.get('/api/doctors.json').success(function(data){
  			filterForm.doctors = data;
     });
     filterForm.loadCalendar = function(selected_doctor){
-    	currentEventService.resetEvento();    	
-			filterForm.isLoading = true;
+    	currentEventService.resetEvento();
     	if (selected_doctor == undefined || selected_doctor	 == null) {
-			  filterForm.selected_doctor = {id:null, full_name: 'Agenda de todos los doctores',
+			  filterForm.selected_doctor = {id: 'todos', full_name: 'Agenda de todos los doctores',
 			  															color:'black'};
 			}else{
 				filterForm.selected_doctor = selected_doctor;
 			}
-    	$('#calendar').fullCalendar('destroy');	
-			$('#calendar').fullCalendar({
-				header: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'month,agendaWeek,agendaDay'
-				},
-				defaultDate: $(this).data('serverdate'),
-				minTime: '06:00:00',
-				lang: 'es',
-				axisFormat: 'h:mma',
-				firstDay: 1,
-				lazyFetching: false,
-				defaultView: 'agendaWeek',
-				selectable: $('#calendar').data('selectable'),
-				selectHelper: true,
-				eventColor: filterForm.selected_doctor.color,
-				select: function(start, end) {
-					var view = $('#calendar').fullCalendar('getView');
-					if(view.name == 'month'){
-						messagesService.show_message('unprocesable',
-						'No se puede crear un evento de esta manera. Cambie a la vista semana o día.');
-					}
-					else{
-						if (filterForm.selected_doctor.id) {
-							newEventService.newEvento(start.format(),end.format(),filterForm.selected_doctor.id,
-							filterForm.selected_doctor.full_name);
-						}else{
-							messagesService.show_message('unprocesable',
-								'El evento solo puede ser creado para un doctor. Seleccione uno y filtre su agenda.');
-							$('#calendar').fullCalendar('unselect');
-						}
-					}					
-				},
-				loading: function (bool,view) { 
-				  if (bool){
-				  	filterForm.isLoading = true; 
-				  	$("#calendar-container").mask('');
-				  }
-				  else{
-				  	filterForm.isLoading = false;
-				  	$("#calendar-container").unmask();
-				  }
-				},
-				events: {
-		        url: '/api/eventos',
-		        type: 'GET',
-		        data: function() { // a function that returns an object
-		            return {
-		                doctor_id: filterForm.selected_doctor.id,
-		            };
-		        },
-		        error: function() {
-		            messagesService.show_message('error', 'Something went wrong.');
-		        },
-		    },
-		    eventClick: function(evento, jsEvent, view) {
-		    	currentEventService.updateEvento(evento.id, evento.doctor,evento.paciente,
-		    												evento.motivo, evento.start.format('LLL'), true);
-	      }				
-			});
+			currentDoctorService.updateDoctor(filterForm.selected_doctor.id,
+																			filterForm.selected_doctor.full_name,
+																			filterForm.selected_doctor.color)
     };        
   }]);
-	
 
+	app.directive('pacienteAutocomplete', function(){
+		//usa el scope superior
+		return{
+			restrict: 'A',
+			template: '<input id="buscar_paciente" name="buscar_paciente" class="form-control" \
+								type="text" placeholder="Busque por apellidos y nombres">\
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>',
+			link: function(scope, element, attr) {
+				$('#buscar_paciente').autocomplete({
+		      serviceUrl: '/api/buscar/pacientes',
+		      minChars: 3,
+		      dataType: 'json',
+		      onInvalidateSelection: function () {
+		      	scope.new_evento.paciente_name = null;
+		        scope.new_evento.paciente_id = null;
+		        $('#buscar_paciente').val('');
+		      },
+		      onSelect: function (suggestion) {
+		        scope.new_evento.paciente_name = suggestion.value;
+		        scope.new_evento.paciente_id = suggestion.data;
+		      },
+		      transformResult: function(response) {
+		        return {
+		            suggestions: $.map(response, function(paciente) {
+		                return { value: paciente.full_name,
+		                       data: paciente.id,dni: paciente.dni };
+		            })
+		        };
+		      },
+		      showNoSuggestionNotice: true,
+		      noSuggestionNotice: 'Sin resultados...'
+			  });
+			}					
+		}
+	});
+	app.directive('agendaCalendar', function(){
+		//isolated scope
+		return{
+			restrict: 'A',
+			scope:{
+				serverDate: '@',
+				selectable: '@',
+				doctorId: '@',
+				doctorName: '@',
+				color: '@',
+				showMessage: '&',
+				showEvent: '&',
+				newEvent: '&',
+			},
+			link: function(scope, element, attr) {
+				elemento = angular.element(element);
+			  scope.$watch('doctorId', function() {
+			  	if(!(scope.doctorId == '')){		  		
+				  	$(elemento).fullCalendar('destroy');			  		
+			  		if (scope.doctorId == 'todos'){
+			  			scope.doctorId = '';
+			  		}
+						$(elemento).fullCalendar({
+							header: {
+								left: 'prev,next today',
+								center: 'title',
+								right: 'month,agendaWeek,agendaDay'
+							},
+							defaultDate: scope.serverDate,
+							minTime: '06:00:00',
+							lang: 'es',
+							axisFormat: 'h:mma',
+							firstDay: 1,
+							lazyFetching: false,
+							defaultView: 'agendaWeek',
+							selectable: scope.selectable,
+							selectHelper: true,
+							eventColor: scope.color,
+							events: {
+				        url: '/api/eventos',
+				        type: 'GET',
+				        data: function() { // a function that returns an object
+				            return {
+				                doctor_id: scope.doctorId,
+				            };
+				        },
+				        error: function() {
+				          scope.showMessage({type: 'error',message:'Something went wrong.'});	
+				        },
+					    },
+					    select: function(start, end) {
+								var view = element.fullCalendar('getView');
+								if(view.name == 'month'){
+									scope.showMessage({type: 'unprocesable',
+																		message:'No se puede crear un evento de esta \
+																						manera. Cambie a la vista semana o día.'});
+								}
+								else{
+									if (scope.doctorId != '') { //todos fue cambiado por '' al inicio
+										scope.newEvent({start: start.format(), end: end.format(),
+																		doctor_id: scope.doctorId,
+																	  doctor_name: scope.doctorName})
+									}else{
+										scope.showMessage({type: 'unprocesable',
+																			message: 'El evento solo puede ser creado \
+																								para un doctor. Seleccione uno y \
+																								filtre su agenda.'});
+									}
+								}
+								elemento.fullCalendar('unselect');					
+							},
+					    eventClick: function(evento, jsEvent, view){
+					    	scope.showEvent({evento: evento, by_jquery: true});
+				      },
+					    loading: function (bool,view) { 
+							  if (bool){
+							  	//filterForm.isLoading = true; 
+							  	$("#calendar-container").mask('');
+							  }
+							  else{
+							  	//filterForm.isLoading = false;
+							  	$("#calendar-container").unmask();
+							  }
+							},			
+						});
+			  	
+					}	
+		    });
+	    }
+		}
+	});
+	app.directive('myModal', function(){
+		return{
+			restrinc: 'A',
+			link: function(scope, element, attr) {
+				scope.$watch('show_modal', function() {
+			  	if(scope.show_modal == true){
+			  		element.modal('show');
+			    	element.on('hidden.bs.modal', function (e) {
+			    		scope.reset_data()	    		
+			    		$('#buscar_paciente').val('');
+						});
+			  	}
+			  });
+			},
+		}
+	});
 	app.factory('messagesService', function(){
 		var hawl = {};
 		hawl.show_message = function(type, message){
@@ -267,6 +358,4 @@
 		};
 		return hawl;
 	});
-
-
 })();

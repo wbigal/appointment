@@ -5,10 +5,10 @@
         <i class="fa fa-calendar"></i>
         Calendario
       </h3>
-    </div> <!-- /.portlet-header -->
-    <div class="portlet-content" id='calendar-container'>
-      <div id="calendar" data-serverdate="<%= @server_date%>" data-selectable="<%= can? :create, :api_eventos%>">
-      </div> <!-- /#full-calendar -->        
-    </div> <!-- /.portlet-content -->
-  </div> <!-- /.portlet -->
-</div> <!-- /.col-md-8 -->
+    </div>
+    <div ng-controller='CalendarController' id='calendar-container' class="portlet-content" >
+      <div agenda-calendar server-date="<%= @server_date%>" doctor-id="{{doctor.id}}" 
+        doctor-name="{{doctor.full_name}}" color='{{doctor.color}}' selectable="<%= can? :create, :api_eventos%>" show-message='showMessage(type,message)' show-event='showEvent(evento, by_jquery)' new-event='newEvent(start,end,doctor_id,doctor_name)'></div>     
+    </div>
+  </div> 
+</div>

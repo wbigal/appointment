@@ -35,6 +35,9 @@ describe User do
     create(:user, dni: '22345672')
     expect(build(:user, dni: '22345672')).to_not be_valid
   end
+  it 'has olny numeric DNI' do
+    expect(build(:user, dni: 'fefefefe')).to_not be_valid
+  end
   it 'has a correct DNI lenght' do
   	expect(build(:user, dni: '4639908')).to_not be_valid
   	expect(build(:user, dni: '463990822')).to_not be_valid
@@ -48,11 +51,24 @@ describe User do
   it "validates invalid sexo"  do
     expect(build(:user, sexo: 'M')).to_not be_valid
   end
+  it "is a valid empty sexo"  do
+    expect(build(:user, sexo: '')).to be_valid
+  end
+  it "is a valid nil sexo"  do
+    expect(build(:user, sexo: nil)).to be_valid
+  end
   it 'validates lenght of valid color' do
   	expect(build(:user, color: '#ff4fc')).to_not be_valid
   	expect(build(:user, color: '#ff4fc55')).to_not be_valid
   end
   it 'validates color' do
   	expect(build(:user, color: '#ffz4fc')).to_not be_valid
+  end
+  describe '#full_name' do
+    it 'generates full_name before save in the db' do
+      user = create(:user, abreviacion:'Ing.', apellido_paterno: 'Paez', apellido_materno: 'Chavez',
+                    nombres:'Wenceslao')
+      expect(user.full_name).to eq('Ing. Paez Chavez Wenceslao')
+    end
   end
 end 

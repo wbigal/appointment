@@ -11,13 +11,18 @@ class User < ActiveRecord::Base
   validates :nombres, length: { maximum: 250 }
   validates :apellido_paterno, length: { maximum: 250 }
   validates :apellido_materno, length: { maximum: 250 }
-
+  
+  validates :dni, :numericality => true
   validates_length_of :dni, :is => 8
   validates_uniqueness_of :dni
-  validates :admin, :inclusion => {:in => [true, false]}
-  validates :superadmin, :inclusion => {:in => [true, false]}  
-  validates :doctor, :inclusion => {:in => [true, false]} 
-  validates :sexo, :inclusion => {:in => ['MASCULINO', 'FEMENINO']}                     
+
+  validates_inclusion_of :admin, :in => [true, false]
+  validates_inclusion_of :doctor, :in => [true, false]
+  validates_inclusion_of :superadmin, :in => [true, false]
+
+  validates_inclusion_of :sexo, :in => ['MASCULINO', 'FEMENINO'], allow_nil: true,
+                          allow_blank:true  
+
   validate :color_format
   scope :doctors, -> { where(doctor: true) }
   scope :admins, -> { where(admin: true) }

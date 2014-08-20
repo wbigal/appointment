@@ -1,5 +1,6 @@
 <%if can? :create, :api_eventos%>
-<div id="newEventModal" class="modal modal-styled fade" ng-controller='newEventController as newEventCtrl'>
+<div id="newEventModal" class="modal modal-styled fade" ng-controller='newEventController'
+  my-modal mymymy='{{show_modal}}'>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -30,12 +31,11 @@
 
               <div class="form-group" ng-class="{'has-error': errors.paciente}">
                 <label class='control-label' for="buscar_paciente">Paciente</label>
-                <div class="input-group date ui-datepicker">
-                    <input id="buscar_paciente" name="buscar_paciente" class="form-control" type="text" placeholder="Busque por apellidos y nombres">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>                   
+                <div paciente-autocomplete class="input-group">                  
                 </div>
                 <p class='control-label'>{{errors.paciente.join()}}</p>
               </div>
+             
               <div class="form-group" ng-class="{'has-error': errors.motivo}">
                 <label class='control-label' for="textarea-input">Motivo</label>
                 <textarea name="textarea-input" id="textarea-input" cols="10" rows="3" class="form-control" ng-model='new_evento.motivo'></textarea>

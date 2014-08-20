@@ -1,0 +1,65 @@
+<% provide(:title, "Usuarios") %>
+<% breadcrumb_add 'Principal', nil%>
+<div class="container">
+  <div class="content">
+    <div class="content-container">
+      <div class="content-header">
+        <h2 class="content-header-title">Usuarios del sistema</h2>
+        <%= render_breadcrumb %>      
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="portlet">
+            <div class="portlet-header">
+              <h3>
+                <i class="fa fa-table"></i>
+                Usuarios del sistema
+              </h3>
+              <div style='text-align: right; padding-top:2px;'>
+                <%= link_to new_user_path, class:'btn btn-secondary' do%>
+                  <i class="fa fa-user"></i> Nuevo usuario
+                <%end%>
+              </div> 
+            </div> <!-- /.portlet-header -->
+            <div class="portlet-content">
+
+              <table class="table table-bordered table-highlight">
+                <thead>
+                  <tr>
+                    <th>DNI</th>
+                    <th>Apellidos y nombres</th>
+                    <th>¿Superadmin?</th>
+                    <th>¿Admin?</th>
+                    <th>¿Doctor?</th>
+                    <th>Estado</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @users.each do |user|%>
+                    <tr>
+                      <td><%= user.dni%></td>
+                      <td><%= user.full_name%></td>
+                      <td><%= booleano? user.superadmin%></td>
+                      <td><%= booleano? user.admin%></td>
+                      <td><%= booleano? user.doctor%></td>
+                      <td><%= banned? user.deshabilitado%></td>
+                      <td>
+                        <%= link_to(edit_user_path(user), :class => 'btn btn-success btn-xs') do %>
+                          <i class="fa fa-pencil"> Editar</i>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <%end%>            
+                </tbody>
+              </table>
+              <center>
+                <%= will_paginate @users,previous_label: 'Anterior', next_label: 'Siguiente', renderer: BootstrapPagination::Rails %>
+              </center>
+            </div> <!-- /.portlet-content -->
+          </div> <!-- /.portlet -->
+        </div> <!-- /.col -->
+      </div> <!-- /.row -->
+    </div> <!-- /.content-container -->     
+  </div> <!-- /.content -->
+</div> <!-- /.container -->

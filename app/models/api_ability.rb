@@ -10,7 +10,8 @@ class ApiAbility
       can :destroy, :eventos
       
       can :buscar_pacientes, :pacientes
-    elsif user.doctor?
+    end
+    if user.doctor?
       can :index, :doctors
 
       can :index, :eventos

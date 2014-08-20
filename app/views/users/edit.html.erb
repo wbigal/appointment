@@ -1,0 +1,28 @@
+<% provide(:title, "Usuarios::Editar #{@user.full_name}") %>
+<% breadcrumb_add 'Principal', users_path%>
+<% breadcrumb_add "Editar: #{@user.full_name}", nil%>
+<div class="container">
+  <div class="content">
+    <div class="content-container">
+      <div class="content-header">
+        <h2 class="content-header-title">Editar</h2>
+        <%= render_breadcrumb %>      
+      </div> <!-- /.content-header -->      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="portlet">
+            <div class="portlet-header">
+              <h3>
+                <i class="fa fa-table"></i>
+                Usuarios del sistema
+              </h3>
+            </div> <!-- /.portlet-header -->
+            <div class="portlet-content">
+              <%= render 'form'%>
+            </div> <!-- /.portlet-content -->
+          </div> <!-- /.portlet -->
+        </div> <!-- /.col -->
+      </div> <!-- /.row -->      
+    </div> <!-- /.content-container -->     
+  </div> <!-- /.content -->
+</div> <!-- /.container -->
