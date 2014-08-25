@@ -44,7 +44,7 @@ end
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
-
+gem "faker"
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 group :development, :test do
@@ -52,7 +52,7 @@ group :development, :test do
 	gem "factory_girl_rails"
 	gem "cucumber-rails", :require => false
 	gem 'debugger'	
-	gem "faker"
+	
 end
 
 group :test do
