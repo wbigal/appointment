@@ -24,6 +24,7 @@ color: #39b3d7;
 .show-hide-animation.ng-hide {
   opacity:0;
 }
+
 /*Para autocomplete*/
 .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
 .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
@@ -41,6 +42,10 @@ color: #39b3d7;
 }
 
 .form-group .field_with_errors label{
+	color: #a94442;
+}
+
+.has_error label{
 	color: #a94442;
 }
 .error_notice{

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   #skip_authorize_resource :only => [:edit_password, :update_password, :mi_perfil]
 	def index
+    @angular_app_name ||= 'usersApp'
 		@users = User.paginate(:page => params[:page], :per_page => 10).order('full_name')
   end
   def new

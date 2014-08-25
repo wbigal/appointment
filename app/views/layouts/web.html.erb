@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" ng-app="<%=@angular_app_name%>">
+<html class="no-js">
 <!--<![endif]-->
 <head>
   <title><%=full_title(yield(:title))%></title>
@@ -19,14 +19,17 @@
 
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "application_angular" %>
-  <%= javascript_include_tag "angular-app/agenda.js" %>
+  <%= javascript_include_tag "angular-app/agenda-app.js" %>
+  <%= javascript_include_tag "angular-app/user-app.js" %>
   <%= render 'layouts/web/shim'%>
   <%= csrf_meta_tags %>
 </head>
 <body>
 <%= render 'layouts/web/header/navbar'%>	
-<%= render 'layouts/web/header/mainbar'%>	
-<%= yield %>
+<%= render 'layouts/web/header/mainbar'%>
+<div ng-app="<%=@angular_app_name%>">
+  <%= yield %>
+</div>
 <%= render 'layouts/web/footer/footer'%>	
 </body>
 </html>

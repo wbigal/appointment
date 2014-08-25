@@ -22,24 +22,28 @@
 									recomendado_por:Faker::Name.name,
 									dni: 1.upto(8).map{|d| rand(0..9)}.join)
 end
-color = '#' + ("%06x" % (rand * 0xffffff))
+colores = %w[#69D2E7 #A7DBD8 #E0E4CC #F38630 #FA6900
+  		 		#ECD078 #D95B43 #C02942 #542437 #53777A #556270
+			 		#4ECDC4 #C7F464 #FF6B6B #C44D58 #547980 #45ADA8
+			 		#9DE0AD #CBE86B #FF4E50 #FC913A #F9D423 #EDE574]
+color = colores[rand(0..22)]
 #creation of 1 Admin user
 user = User.create(password: '1234abcd', password_confirmation:'1234abcd', email: 'chences@hotmail.com',
 						admin: true, apellido_paterno: 'Paez', apellido_materno:'Chavez', nombres:'Wenceslao',
-						abreviacion: 'Ing.', dni:'46399081', color: color, superadmin:false, doctor:false)
+						abreviacion: 'Lic.', dni:'46399081', color: color, superadmin:true, doctor:false)
 #creation of a mix Admin-Doctor user
-color = '#' + ("%06x" % (rand * 0xffffff))
+color = colores[rand(0..22)]
 User.create(password: '1234abcd', password_confirmation:'1234abcd', email: 'jujuy@hotmail.com',
 						admin: true, doctor:true, apellido_paterno: 'Oltra', apellido_materno:'Suerez', nombres:'Luis',
 						abreviacion: 'Dr.', dni:'10203040', color: color, superadmin:false)
 #Creation of 10 Doctors
 1.upto(10).each do |index|
 	name = Faker::Name.first_name
-	color = '#' + ("%06x" % (rand * 0xffffff))
+	color = colores[rand(0..22)]
 	User.create(password: '1234abcd', password_confirmation:'1234abcd',
 						 email: Faker::Internet.email(name),doctor:true, admin:false, superadmin:false,
 						 apellido_paterno: Faker::Name.last_name, apellido_materno: Faker::Name.last_name,
-						 nombres: name, abreviacion: ['Dr.','Ondon.'][rand(0..1)],
+						 nombres: name,sexo: ['MASCULINO','FEMENINO'][rand(0..1)], abreviacion: ['Dr.','Odon.'][rand(0..1)],
 						 dni: 1.upto(8).map{|d| rand(0..9)}.join, color: color)
 end
 #creation of eventos

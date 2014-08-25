@@ -6,7 +6,7 @@
 	    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 	  }
 	]);
-	app.factory('currentEventService', function($rootScope){
+	app.factory('currentEventService',['$rootScope', function($rootScope){
 		var evento = {};
 		evento.updateEvento = function(id, doctor, paciente, motivo, fecha,jquery_generated){
         this.id = id;
@@ -26,9 +26,9 @@
   		$rootScope.$broadcast("resetedEvent");    	
   	}
     return evento;
-	});
+	}]);
 
-	app.factory('currentDoctorService', function($rootScope){
+	app.factory('currentDoctorService',['$rootScope', function($rootScope){
 		var doctor = {};
 		doctor.updateDoctor = function(id, full_name, color){
         this.id = id;
@@ -37,9 +37,9 @@
         $rootScope.$broadcast("doctorUpdated");
     }
     return doctor;
-	});
+	}]);
 	
-	app.factory('newEventService', function($rootScope){
+	app.factory('newEventService',['$rootScope', function($rootScope){
 		var new_evento = {};
 		new_evento.newEvento = function(start_time,end_time,doctor_id,doctor_name){
         this.doctor_id = doctor_id;
@@ -55,7 +55,7 @@
 				$rootScope.$broadcast("newEventGenerated");
     }
     return new_evento;
-	});
+	}]);
 
 	app.controller('newEventController',
 								['$http','$scope','currentEventService','messagesService', 'newEventService',

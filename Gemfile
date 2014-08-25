@@ -29,6 +29,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
+gem 'angular-rails-templates'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -60,4 +61,10 @@ group :test do
 	gem "launchy"
 	gem "selenium-webdriver"
 	gem 'simplecov', :require => false
+end
+
+group :production, :staging do
+  gem "rails_12factor"
+  gem "rails_stdout_logging"
+  gem "rails_serve_static_assets"
 end

@@ -1,0 +1,24 @@
+<div class="content-header">
+  <h2 class="content-header-title">Usuarios del sistema</h2>
+  <ol class="breadcrumb">
+		<li class='active'>
+			<a ng-href="{{full_user_path}}"> Principal</a>
+		</li>
+		<li class='active'>Nuevo usuario</li>
+	</ol> 
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet">
+      <div class="portlet-header">
+        <h3>
+          <i class="fa fa-user"></i>
+          Nuevo usuario
+        </h3>
+      </div> <!-- /.portlet-header -->
+      <div class="portlet-content">
+      	<div ng-include src="'users/_form.html'"></div>        
+      </div> <!-- /.portlet-content -->
+    </div> <!-- /.portlet -->
+  </div> <!-- /.col -->
+</div>

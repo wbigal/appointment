@@ -1,0 +1,69 @@
+<div ng-if='loaded_users'>
+  <div class="content-header">
+    <h2 class="content-header-title">Usuarios del sistema</h2>
+    <ol class="breadcrumb">
+  		<li class='active'>Principal</li>
+  	</ol> 
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="portlet">
+        <div class="portlet-header">
+          <h3>
+            <i class="fa fa-table"></i>
+            Usuarios del sistema
+          </h3>
+          <div style='text-align: right; padding-top:2px;'>
+          	<a href='/users/new' class='btn btn-secondary'>
+          		<i class="fa fa-user"></i> Nuevo usuario
+          	</a>
+          </div> 
+        </div> <!-- /.portlet-header -->
+        <div class="portlet-content">
+          <table class="table table-bordered table-highlight">
+            <thead>
+              <tr>
+                <th>DNI</th>
+                <th>Apellidos y nombres</th>
+                <th>Color</th>
+                <th>¿Superadmin?</th>
+                <th>¿Admin?</th>
+                <th>¿Doctor?</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody ng-repeat='user in users'>
+              <tr>
+                <td>{{user.dni}}</td>
+                <td>{{user.full_name}}</td>
+                <td>
+                  <center>
+                    <span class="badge" style='background-color: {{user.color}}'>
+                      &nbsp;&nbsp;
+                    </span>
+                  </center>
+                </td>
+                <td>{{user.superadmin}}</td>
+                <td>{{user.admin}}</td>
+                <td>{{user.doctor}}</td>
+                <td>{{user.deshabilitado}}</td>
+                <td>
+                	<a ng-href='/users/{{user.id}}/edit' class='btn btn-success btn-xs'>
+                		<i class="fa fa-pencil"> Editar</i>
+                	</a>
+                </td>
+              </tr>          
+            </tbody>
+          </table>
+          <center>
+            <div class="willPaginate"
+               data-params="willPaginateCollection"
+               data-on-click="getPage"
+               data-config="willPaginateConfig"></div>
+          </center>
+        </div> <!-- /.portlet-content -->
+      </div> <!-- /.portlet -->
+    </div> <!-- /.col -->
+  </div> <!-- /.row -->
+</div>

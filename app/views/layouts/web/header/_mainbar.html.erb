@@ -5,16 +5,34 @@
     </button>
     <div class="mainbar-collapse collapse">
       <ul class="nav navbar-nav mainbar-nav">
-        <li class="active">
+        <%if controller_name == 'principal'%>
+          <li class="active">
+        <%else%>
+          <li>
+        <%end%>           
           <%= link_to root_path do%>
             <i class="fa fa-dashboard"></i>
             Dashboard
           <%end%>
         </li>
-        <li class="">
+        <%if controller_name == 'agenda'%>
+          <li class="active">
+        <%else%>
+          <li>
+        <%end%>
           <%= link_to agenda_path do%>
             <i class="fa fa-calendar"></i>
             Agenda
+          <%end%>
+        </li>
+        <%if controller_name == 'users'%>
+          <li class="active">
+        <%else%>
+          <li>
+        <%end%>
+          <%= link_to users_path do%>
+            <i class="fa fa-user"></i>
+            Usuarios
           <%end%>
         </li>
       </ul>

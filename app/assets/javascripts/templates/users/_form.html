@@ -1,0 +1,116 @@
+<form class="form-horizontal" ng-submit='processUser()' >
+	<div class="form-group" >
+		<label ng-class="{'error_notice': errors.apellido_paterno ||errors.apellido_materno || errors.abreviacion || errors.nombres }" class="col-md-2 control-label" for="user_apellido_paterno">
+			Apellidos y nombres
+		</label>
+		<div class="col-md-10">
+			<div class="row">
+				<div class="col-md-2" ng-class="{'has-error': errors.abreviacion}">
+					<select ng-options="abreviacion as abreviacion for abreviacion in abreviaciones" ng-model="user.abreviacion" ng-selected="user.abreviacion" class="form-control">
+					</select>
+          <p class='control-label' style='text-align: left;'>{{errors.abreviacion.join()}}</p>
+				</div>
+        <div class="col-md-3" ng-class="{'has-error': errors.apellido_paterno}">
+          <input ng-model='user.apellido_paterno' class="form-control" 	placeholder="Apellido paterno" type="text">
+          <p class='control-label' style='text-align: left;'>{{errors.apellido_paterno.join()}}</p>        
+        </div>
+				<div class="col-md-3" ng-class="{'has-error': errors.apellido_materno}">
+          <input ng-model='user.apellido_materno' class="form-control" 	placeholder="Apellido paterno" type="text">
+          <p class='control-label' style='text-align: left;'>{{errors.apellido_materno.join()}}</p>        
+        </div>
+				<div class="col-md-4" ng-class="{'has-error': errors.nombres}">
+          <input ng-model='user.nombres' class="form-control" 	placeholder="Apellido paterno" type="text">
+          <p class='control-label' style='text-align: left;'>{{errors.nombres.join()}}</p>        
+        </div>
+      </div>
+    </div>    
+  </div>
+  <div class="form-group" ng-class="{'has-error': errors.dni}">
+    <label class="col-md-2 control-label" for="user_dni">DNI</label>
+    <div class="col-md-5">
+      <input ng-model='user.dni' class="form-control" id="user_dni" type="text">
+      <p class='control-label' style='text-align: left;'>{{errors.dni.join()}}</p> 
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': errors.email}">
+    <label class="col-md-2 control-label" for="user_email">Email</label>
+    <div class="col-md-5">
+      <input ng-model='user.email' class="form-control" id="user_email" name="user[email]" type="email" value="">
+      <p class='control-label' style='text-align: left;'>{{errors.email.join()}}</p>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': errors.sexo}">
+    <label class="col-md-2 control-label" for="user_sexo">Sexo</label>
+    <div class="col-md-5">
+    	<select ng-options="sexo as sexo for sexo in sexos" ng-model="user.sexo" class="form-control">				
+			</select>
+			<p class='control-label' style='text-align: left;'>{{errors.sexo.join()}}</p>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': errors.color}">
+    <label class="col-md-2 control-label" for="user_sexo">Color</label>
+    <div class="col-lg-10">
+    	<div color-picker></div>
+			<p class='control-label' style='text-align: left;'>{{errors.color.join()}}</p>
+    </div>  
+  </div>  
+  <div class="form-group" ng-class="{'has-error': errors.superadmin}">
+    <label class="col-md-2 control-label" for="user_superadmin">¿Superadmin?</label>
+    <div class="col-md-10">
+      <label class="radio-inline">
+        <input ng-model='user.superadmin' class="multiple_classes" id="user_superadmin_true" type="radio" ng-value="true"> SI
+      </label>
+      <label class="radio-inline">
+        <input ng-model='user.superadmin' class="multiple_classes" id="user_superadmin_false" type="radio" ng-value="false"> NO
+      </label>
+      <p class='control-label' style='text-align: left;'>{{errors.superadmin.join()}}</p>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': errors.admin}">
+    <label class="col-md-2 control-label" for="user_superadmin">¿Admin?</label>
+    <div class="col-md-10">
+      <label class="radio-inline">
+        <input ng-model='user.admin' class="multiple_classes" id="user_superadmin_true" type="radio" ng-value="true"> SI
+      </label>
+      <label class="radio-inline">
+        <input ng-model='user.admin' class="multiple_classes" id="user_superadmin_false" type="radio" ng-value="false"> NO
+      </label>
+      <p class='control-label' style='text-align: left;'>{{errors.admin.join()}}</p>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': errors.doctor}">
+    <label class="col-md-2 control-label" for="user_superadmin">¿Doctor?</label>
+    <div class="col-md-10">
+      <label class="radio-inline">
+        <input ng-model='user.doctor' class="multiple_classes" id="user_superadmin_true" type="radio" ng-value="true"> SI
+      </label>
+      <label class="radio-inline">
+        <input ng-model='user.doctor' class="multiple_classes" id="user_superadmin_false" type="radio" ng-value="false"> NO
+      </label>
+      <p class='control-label' style='text-align: left;'>{{errors.doctor.join()}}</p>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': errors.deshabilitado}">
+    <label class="col-md-2 control-label" for="user_superadmin">¿Deshabilitado?</label>
+    <div class="col-md-10">
+      <label class="radio-inline">
+        <input ng-model='user.deshabilitado' class="multiple_classes" id="user_superadmin_true" type="radio" ng-value="true"> SI
+      </label>
+      <label class="radio-inline">
+        <input ng-model='user.deshabilitado' class="multiple_classes" id="user_superadmin_false" type="radio" ng-value="false"> NO
+      </label>
+      <p class='control-label' style='text-align: left;'>{{errors.deshabilitado.join()}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <button ng-disabled="loading" class="btn btn-info" type="submit">
+        <i class="fa fa-check"></i> Guardar
+			</button>
+      <a ng-if="loaded_user" class="btn btn-danger" ng-confirm-click="Se cambiara el password con el valor del DNI: {{user.dni}}" confirmed-click="reset_password()" href>
+        <i class="fa fa-pencil"> Resetear contraseña</i>
+      </a>
+		</div>
+    
+  </div>
+</form>
