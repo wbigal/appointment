@@ -28,12 +28,12 @@ colores = %w[#69D2E7 #A7DBD8 #E0E4CC #F38630 #FA6900
 			 		#9DE0AD #CBE86B #FF4E50 #FC913A #F9D423 #EDE574]
 color = colores[rand(0..22)]
 #creation of 1 Admin user
-user = User.create(password: '1234abcd', password_confirmation:'1234abcd', email: 'chences@hotmail.com',
-						admin: true, apellido_paterno: 'Paez', apellido_materno:'Chavez', nombres:'Wenceslao',
+user = User.create(password: '1234abcd', password_confirmation:'1234abcd', email: 'admin@admin.com',
+						admin: true, apellido_paterno: 'San Martin', apellido_materno:'Don', nombres:'Jose',
 						abreviacion: 'Lic.', dni:'46399081', color: color, superadmin:true, doctor:false)
 #creation of a mix Admin-Doctor user
 color = colores[rand(0..22)]
-User.create(password: '1234abcd', password_confirmation:'1234abcd', email: 'jujuy@hotmail.com',
+User.create(password: '1234abcd', password_confirmation:'1234abcd', email: 'jujuy@admin.com',
 						admin: true, doctor:true, apellido_paterno: 'Oltra', apellido_materno:'Suerez', nombres:'Luis',
 						abreviacion: 'Dr.', dni:'10203040', color: color, superadmin:false)
 #Creation of 10 Doctors

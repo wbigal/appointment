@@ -32,7 +32,7 @@ describe Evento do
   end
   it 'is invalid with start_time > end_time' do
   	expect(build(:evento, start_time: "2014-07-10 14:58:01",
-  							end_time: "2014-07-10 13:58:01 -0500")).to_not be_valid
+  							end_time: "2014-07-10 13:58:01")).to_not be_valid
   end
   
   context 'validates the creation of citas with start_time and end_time in the same day' do

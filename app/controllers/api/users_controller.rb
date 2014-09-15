@@ -17,9 +17,6 @@ class Api::UsersController < ApiController
 									  data: {errors: user.errors.messages}}, status: 422
 		end							
 	end
-	def show
-		@user = User.find(params[:id])
-	end
 	def update
 		user = User.find(params[:id])
 		if user.superadmin && current_user == user
@@ -44,7 +41,7 @@ class Api::UsersController < ApiController
 										data: {}}, status: 200
     else
       render json: {status: 'error',
-										message: 'El usuario fue actualizado correctamente.',
+										message: 'No puedes resetear tu propio password.',
 										data: {}}, status: 422
     end
   end

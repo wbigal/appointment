@@ -52,7 +52,7 @@
 	}]);
 
 	app.factory('PageService',[function(){
-		var data = {}
+		var data = {full_user_path: '/users'}
 		data.setPage = function(page){
 			if(page != 1 && page != undefined){
 				data.full_user_path = '/users?page=' + page 
