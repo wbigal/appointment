@@ -8,37 +8,35 @@
 	  'titleService',
 	  'messagesService',
 	  'willPaginate',
-	])
-	//sends the authenticity token on all request
-	app.config(["$httpProvider", function($httpProvider) {
+	]);
+	app.config(['$httpProvider', function($httpProvider) {
 	  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
 	}]);
 	app.config(['$routeProvider', '$locationProvider',
 		function($routeProvider, $locationProvider){
 			$routeProvider
 				.when('/users', {
-		      templateUrl: "users/index.html",
+		      templateUrl: 'users/index.html',
 		      controller: 'UsersController',
 		      title: 'Listado de usuarios'
 		    }).when('/users/new', {
-		      templateUrl: "users/new.html",
+		      templateUrl: 'users/new.html',
 		      controller: 'newUserController',
 		      title: 'Nuevo usuario'
 		    })
 		    .when('/users/:userId/edit', {
-		      templateUrl: "users/edit.html",
+		      templateUrl: 'users/edit.html',
 		      controller: 'editUserController',
 		      title: 'Editar usuario'
-		    })
+		    });
 		  $locationProvider.html5Mode(true);  
 	}]);
 	app.run(['$rootScope','titleService','$location',
 		function($rootScope,titleService,$location){
-		$rootScope.$on("$routeChangeSuccess", function(event, currentRoute, previousRoute) {
-		  titleService.setTitle(currentRoute.$$route.title)
+		$rootScope.$on('$routeChangeSuccess', function(event, currentRoute, previousRoute) {
+		  titleService.setTitle(currentRoute.$$route.title);
 		});
-	}])
-	
+	}]);	
 	app.factory('UserService',['$resource', function ($resource) {
     return $resource('/api/users/:userId/:reset_password.:format', {format: 'json'},
       {
@@ -47,19 +45,18 @@
       	update:{ method:'PUT' },
       	reset_password:{ method: 'POST',
       				params: {userId: '@userId',reset_password: 'reset_password'}}
-      }
-    );
+    });
 	}]);
 
 	app.factory('PageService',[function(){
-		var data = {full_user_path: '/users'}
+		var data = {full_user_path: '/users'};
 		data.setPage = function(page){
-			if(page != 1 && page != undefined){
-				data.full_user_path = '/users?page=' + page 
+			if(page != 1 && page !== undefined){
+				data.full_user_path = '/users?page=' + page;
 			}else{
-				data.full_user_path = '/users'
+				data.full_user_path = '/users';
 			}
-		}
+		};
 		return data;
 	}]);
 	app.controller('UsersController',
@@ -89,9 +86,9 @@
 	    };
 	    $scope.getPage = function(page){
 	      if(page == 1){
-	      	$location.path("/users");
+	      	$location.path('/users');
 	      }else{
-	      	$location.path("/users").search('page', page);
+	      	$location.path('/users').search('page', page);
 	      }
 
 	    };
@@ -103,45 +100,44 @@
 		['$scope', 'UserService','$location','$routeParams',
 		'messagesService','PageService',function($scope, UserService,
 		$location, $routeParams, messagesService, PageService){
-			$scope.full_user_path = PageService.full_user_path
+			$scope.full_user_path = PageService.full_user_path;
 	  	$scope.loaded_user = false;
-	  	$scope.abreviaciones = ['Odon.','Dr.','Dra.','Lic.','Obs.','Enf.']
-			$scope.sexos = ['MASCULINO','FEMENINO']
+	  	$scope.abreviaciones = ['Odon.','Dr.','Dra.','Lic.','Obs.','Enf.'];
+			$scope.sexos = ['MASCULINO','FEMENINO'];
 			$scope.loading = false;
 	  	UserService.get({userId: $routeParams.userId}).$promise.then(
        	function(user) {
           $scope.user = user;
           $scope.loaded_user =true;
         },function(error){
-        	$location.path("/users");
-        	messagesService.show_message(error.data.status, error.data.message);
+        	$location.path('/users');
+					messagesService.show_message(error.data.status, error.data.message);
         }
       );
 			$scope.processUser = function() {
-				console.log('weza')
 				$scope.loading = true;
-				var data = { user: $scope.user }
+				var data = { user: $scope.user };
 				UserService.update({ userId: $scope.user.id }, data).$promise.then(
 	        function(value){        	
 	        	$scope.loading = false;
-	        	$location.path("/users");
-	        	messagesService.show_message(value.status, value.message);
+	        	$location.path('/users');
+						messagesService.show_message(value.status, value.message);
 	        },
 	        function(error){
 	        	$scope.loading = false;
 	        	$scope.errors = error.data.data.errors;
 	        	messagesService.show_message(error.data.status, error.data.message);
 	        }
-	      )
+	      );
 			};
 			$scope.reset_password = function(){
 				UserService.reset_password({ userId: $scope.user.id }).$promise.then(
 	        function(value){
-	        	$location.path("/users");
+	        	$location.path('/users');
 	        	messagesService.show_message(value.status, value.message);
 	        },
 	        function(error){
-	        	$location.path("/users");
+	        	$location.path('/users');
 	        	messagesService.show_message(error.data.status, error.data.message);
 	        }
 	      )
@@ -152,14 +148,14 @@
 	app.controller('newUserController',
 		['$scope', 'UserService','$location','messagesService','PageService',
 	  function($scope, UserService, $location, messagesService,PageService){
-	  	$scope.full_user_path = PageService.full_user_path
-			$scope.abreviaciones = ['Odon.','Dr.','Dra.','Lic.','Obs.','Enf.']
-			$scope.sexos = ['MASCULINO','FEMENINO']
-			$scope.user = { apellido_paterno: ''}
+	  	$scope.full_user_path = PageService.full_user_path;
+			$scope.abreviaciones = ['Odon.','Dr.','Dra.','Lic.','Obs.','Enf.'];
+			$scope.sexos = ['MASCULINO','FEMENINO'];
+			$scope.user = { apellido_paterno: ''};
 			$scope.loading = false;
 			$scope.processUser = function() {
 				$scope.loading = true;
-				var data = { user: $scope.user }
+				var data = { user: $scope.user };
 				UserService.create(data).$promise.then(
 	        function(value){        	
 	        	$scope.loading = false;
@@ -185,8 +181,8 @@
 	      }
 	    },
 	    leave: function(element, done) {
-	      element.fadeIn(1000, done)
-	      return function() {
+	      element.fadeIn(1000, done);
+	      return function(){
 	        element.stop();
 	      }
 	    }
