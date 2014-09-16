@@ -20,10 +20,10 @@
               <div class="form-group" ng-class="{'has-error': errors.base}">
                 <label class='control-label' for="buscar_paciente">Fecha y hora</label>
                 <div class="input-group date ui-datepicker">
-                    <input name="buscar_paciente" class="form-control " type="text"
+                    <input class="form-control " type="text"
                     value="{{new_evento.formated_start}}" id="disabledTextInput"readonly>
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input name="buscar_paciente" class="form-control " type="text" value="{{new_evento.formated_end}}" readonly>
+                    <input class="form-control " type="text" value="{{new_evento.formated_end}}" readonly>
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>              
                 </div>
                 <p class='control-label'>{{errors.base.join()}}</p>
@@ -38,7 +38,7 @@
              
               <div class="form-group" ng-class="{'has-error': errors.motivo}">
                 <label class='control-label' for="textarea-input">Motivo</label>
-                <textarea name="textarea-input" id="textarea-input" cols="10" rows="3" class="form-control" ng-model='new_evento.motivo'></textarea>
+                <textarea id="motivo" cols="10" rows="3" class="form-control" ng-model='new_evento.motivo'></textarea>
                 <p class='control-label'>{{errors.motivo.join()}}</p>
               </div>
               </br>               

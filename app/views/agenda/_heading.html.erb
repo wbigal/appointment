@@ -5,7 +5,7 @@
   <div class="btn-group ">
     <form class="form-inline" role="form" ng-submit='filterForm.loadCalendar(selected_doctor)'>
       <div class="form-group">
-        <select ng-model="selected_doctor" class="form-control" ng-options="doctor.full_name for doctor in filterForm.doctors" title="Doctors">
+        <select id='select_doctor' ng-model="selected_doctor" class="form-control" ng-options="doctor.full_name for doctor in filterForm.doctors" title="Doctors">
           <option value="">Todos</option>
         </select>        
       </div>

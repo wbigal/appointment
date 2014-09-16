@@ -17,6 +17,9 @@ class Api::UsersController < ApiController
 									  data: {errors: user.errors.messages}}, status: 422
 		end							
 	end
+  def show
+    @user = User.find(params[:id])
+  end
 	def update
 		user = User.find(params[:id])
 		if user.superadmin && current_user == user
