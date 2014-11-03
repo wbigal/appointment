@@ -1,4 +1,6 @@
 ==Appointment
-[ ![Codeship Status for wcpaez/appointment](https://www.codeship.io/projects/b9811190-45b6-0132-5844-4672153151d2/status)](https://www.codeship.io/projects/45102)
+
+{<img alt="Status?branch=master" src="https://codeship.io/projects/b9811190-45b6-0132-5844-4672153151d2/status?branch=master" />}[https://codeship.io/projects/45102]
+
 FullCalendar + Angular.js + RoR to register appointments
 
